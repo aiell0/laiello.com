@@ -74,3 +74,29 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_alarm" {
   alarm_description         = "This metric monitors ec2 credit balance"
   insufficient_data_actions = []
 }
+
+resource "aws_cloudwatch_metric_alarm" "instance_status_check_alarm" {
+  alarm_name                = "instance_status_check_alarm"
+  comparison_operator       = "GreaterThanThreshold"
+  evaluation_periods        = "1"
+  metric_name               = "StatusCheckFailed_Instance"
+  namespace                 = "AWS/EC2"
+  period                    = "60"
+  statistic                 = "Sum"
+  threshold                 = "1"
+  alarm_description         = "This metric monitors instance status check failures"
+  insufficient_data_actions = []
+}
+
+resource "aws_cloudwatch_metric_alarm" "system_status_check_alarm" {
+  alarm_name                = "system_status_check_alarm"
+  comparison_operator       = "GreaterThanThreshold"
+  evaluation_periods        = "1"
+  metric_name               = "StatusCheckFailed_System"
+  namespace                 = "AWS/EC2"
+  period                    = "60"
+  statistic                 = "Sum"
+  threshold                 = "1"
+  alarm_description         = "This metric monitors instance status check failures"
+  insufficient_data_actions = []
+}
