@@ -1,5 +1,5 @@
-resource "aws_security_group" "wordpress_personal" {
-  name        = "wordpress-personal"
+resource "aws_security_group" "wordpress" {
+  name        = "wordpress"
   description = "For use with personal wordpress blog."
   vpc_id      = var.vpc_id
 
