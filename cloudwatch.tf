@@ -109,3 +109,8 @@ resource "aws_cloudwatch_metric_alarm" "memory_usage_alarm" {
     InstanceId = aws_instance.ec2.id
   }
 }
+
+resource "aws_cloudwatch_log_group" "log_group" {
+  name                      = "laiello.com"
+  retention_in_days         = 7
+}
