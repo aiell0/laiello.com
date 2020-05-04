@@ -1,71 +1,39 @@
-resource "aws_cloudwatch_metric_alarm" "cpu_anomaly_detection" {
-  alarm_name                = "laiello-com-cpu-detection"
-  comparison_operator       = "GreaterThanUpperThreshold"
+resource "aws_cloudwatch_metric_alarm" "network_inbound_alarm" {
+  alarm_name                = "network_inbound_alarm"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "3"
-  threshold_metric_id       = "e1"
-  alarm_description         = "This metric monitors ec2 cpu utilization"
+  metric_name               = "NetworkIn"
+  namespace                 = "AWS/EC2"
+  period                    = "60"
+  statistic                 = "Average"
+  threshold                 = "100000000"
+  alarm_description         = "This metric monitors inbound network traffic"
   alarm_actions             = [aws_sns_topic.laiello_infrastructure.arn]
-
-  metric_query {
-    id          = "e1"
-    expression  = "ANOMALY_DETECTION_BAND(m1)"
-    label       = "CPUUtilization (Expected)"
-    return_data = "true"
-  }
-
-  metric_query {
-    id          = "m1"
-    return_data = "true"
-    metric {
-      metric_name = "CPUUtilization"
-      namespace   = "AWS/EC2"
-      period      = "60"
-      stat        = "Average"
-      unit        = "Count"
-
-      dimensions = {
-        InstanceId = aws_instance.ec2.id
-      }
-    }
+  dimensions = {
+    InstanceId = aws_instance.ec2.id
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "network_in_anomaly_detection" {
-  alarm_name                = "laiello-com-network-detection"
-  comparison_operator       = "GreaterThanUpperThreshold"
+resource "aws_cloudwatch_metric_alarm" "cpu_utilization_alarm" {
+  alarm_name                = "cpu_utilization_alarm"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "3"
-  threshold_metric_id       = "e1"
+  metric_name               = "CPUUtilization"
+  namespace                 = "AWS/EC2"
+  period                    = "60"
+  statistic                 = "Average"
+  threshold                 = "60"
   alarm_description         = "This metric monitors inbound network traffic"
   alarm_actions             = [aws_sns_topic.laiello_infrastructure.arn]
-
-  metric_query {
-    id          = "e1"
-    expression  = "ANOMALY_DETECTION_BAND(m1)"
-    label       = "NetworkIn (Expected)"
-    return_data = "true"
-  }
-
-  metric_query {
-    id          = "m1"
-    return_data = "true"
-    metric {
-      metric_name = "NetworkIn"
-      namespace   = "AWS/EC2"
-      period      = "60"
-      stat        = "Average"
-      unit        = "Count"
-
-      dimensions = {
-        InstanceId = aws_instance.ec2.id
-      }
-    }
+  dimensions = {
+    InstanceId = aws_instance.ec2.id
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_alarm" {
   alarm_name                = "cpu_credit_alarm"
   comparison_operator       = "LessThanOrEqualToThreshold"
-  evaluation_periods        = "2"
+  evaluation_periods        = "3"
   metric_name               = "CPUCreditBalance"
   namespace                 = "AWS/EC2"
   period                    = "120"
