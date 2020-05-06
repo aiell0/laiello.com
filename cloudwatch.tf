@@ -114,3 +114,28 @@ resource "aws_cloudwatch_log_group" "log_group" {
   name                      = "laiello.com"
   retention_in_days         = 7
 }
+
+resource "aws_cloudwatch_log_stream" "apache_error_log" {
+  name           = "apache_error_log"
+  log_group_name = aws_cloudwatch_log_group.log_group.name
+}
+
+resource "aws_cloudwatch_log_stream" "apache_access_log" {
+  name           = "apache_access_log"
+  log_group_name = aws_cloudwatch_log_group.log_group.name
+}
+
+resource "aws_cloudwatch_log_stream" "apache_ssl_access_log" {
+  name           = "apache_ssl_access_log"
+  log_group_name = aws_cloudwatch_log_group.log_group.name
+}
+
+resource "aws_cloudwatch_log_stream" "apache_ssl_error_log" {
+  name           = "apache_ssl_error_log"
+  log_group_name = aws_cloudwatch_log_group.log_group.name
+}
+
+resource "aws_cloudwatch_log_stream" "apache_ssl_request_log" {
+  name           = "apache_ssl_request_log"
+  log_group_name = aws_cloudwatch_log_group.log_group.name
+}
