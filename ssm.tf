@@ -1,3 +1,16 @@
+data "aws_ssm_document" "cloudwatch_manage_agent" {
+    name      = "AmazonCloudWatch-ManageAgent"
+}
+
+# resource "aws_ssm_association" "cloudwatch_agent_config" {
+#   name = aws_ssm_document.cloudwatch_manage_agent.name
+
+#   targets {
+#     key    = "InstanceIds"
+#     values = [aws_instance.ec2.id]
+#   }
+# }
+
 resource "aws_ssm_parameter" "cloudwatch_agent_config" {
   name        = "AmazonCloudWatch-linux"
   description = "Cloudwatch agent configuration for linux servers"
