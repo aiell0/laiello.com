@@ -1,15 +1,46 @@
 terraform {
-    required_version = ">= 0.12"
-    backend "s3" {
-        bucket = "blockforge-infrastructure"
-        key    = "aiell0/laiello.com"
-        region = "us-east-1"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
     }
+  }
+  backend "remote" {
+    organization = "blockforgecapital"
+    workspaces {
+      name = "laiellocom-us-east-1"
+    }
+  }
+  required_version = ">= 0.13"
 }
 
 provider "aws" {
-    version = "~> 2.0"
-    region  = var.region
+  region = var.region
+}
+
+data "tfe_workspace" "laiellocom" {
+  name         = "laiellocom-${var.region}"
+  organization = "blockforgecapital"
+}
+
+data "terraform_remote_state" "arch" {
+  backend = "remote"
+
+  config = {
+    organization = "blockforgecapital"
+    workspaces = {
+      name = "blockforge-arch-${var.region}"
+    }
+  }
 }
 
 data "aws_caller_identity" "current" {}
+
+locals {
+  tags = {
+		environment						 = var.environment
+    terraform_deployed_by  = data.aws_caller_identity.current.arn
+    terraform_version      = data.tfe_workspace.laiellocom.terraform_version
+    terraform_workspace_id = data.tfe_workspace.laiellocom.id
+  }
+}

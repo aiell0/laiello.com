@@ -1,5 +1,5 @@
 data "aws_ssm_document" "cloudwatch_manage_agent" {
-    name      = "AmazonCloudWatch-ManageAgent"
+  name = "AmazonCloudWatch-ManageAgent"
 }
 
 # resource "aws_ssm_association" "cloudwatch_agent_config" {

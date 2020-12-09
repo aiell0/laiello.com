@@ -1,7 +1,7 @@
 resource "aws_security_group" "wordpress" {
   name        = "wordpress"
   description = "For use with personal wordpress blog."
-  vpc_id      = var.vpc_id
+  vpc_id      = data.terraform_remote_state.arch.outputs.vpc_id
 
   ingress {
     description = "HTTPS"
@@ -25,4 +25,6 @@ resource "aws_security_group" "wordpress" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = local.tags
 }
