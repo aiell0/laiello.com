@@ -52,10 +52,11 @@ resource "aws_iam_role_policy_attachment" "ssm_managed_instance" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_client" {
-  role       = aws_iam_role.laiello_ec2_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceforEC2Role"
-}
+# FIXME
+# resource "aws_iam_role_policy_attachment" "ecs_client" {
+#   role       = aws_iam_role.laiello_ec2_role.name
+#   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceforEC2Role"
+# }
 
 resource "aws_iam_role" "laiello_ec2_role" {
   name = "laiello_wordpress_ec2_role"
