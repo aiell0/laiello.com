@@ -111,6 +111,7 @@ resource "aws_cloudwatch_metric_alarm" "memory_usage_alarm" {
 }
 
 resource "aws_cloudwatch_log_group" "log_group" {
+  #checkov:skip=CKV_AWS_97:Encryption
   name              = "laiello.com-wordpress"
   retention_in_days = 7
 }

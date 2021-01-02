@@ -33,7 +33,7 @@ resource "aws_instance" "ec2" {
     device_index         = 0
   }
 
-  tags = merge(local.tags, {"Name": "laiello.com"})
+  tags = merge(local.tags, { "Name" : "laiello.com" })
 }
 
 # Instance Profile
@@ -50,6 +50,11 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_logs" {
 resource "aws_iam_role_policy_attachment" "ssm_managed_instance" {
   role       = aws_iam_role.laiello_ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_client" {
+  role       = aws_iam_role.laiello_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerServiceforEC2Role"
 }
 
 resource "aws_iam_role" "laiello_ec2_role" {

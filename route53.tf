@@ -1,5 +1,5 @@
 data "aws_route53_zone" "primary" {
-  name         = "laiello.com"
+  name = "laiello.com"
 }
 
 resource "aws_route53_record" "map_eip" {

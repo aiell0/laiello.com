@@ -38,7 +38,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   tags = {
-		environment						 = var.environment
+    environment            = var.environment
     terraform_deployed_by  = data.aws_caller_identity.current.arn
     terraform_version      = data.tfe_workspace.laiellocom.terraform_version
     terraform_workspace_id = data.tfe_workspace.laiellocom.id
