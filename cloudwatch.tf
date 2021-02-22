@@ -33,7 +33,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_alarm" {
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_alarm" {
   alarm_name          = "cpu_credit_alarm"
   comparison_operator = "LessThanOrEqualToThreshold"
-  evaluation_periods  = "3"
+  evaluation_periods  = "15"
   metric_name         = "CPUCreditBalance"
   namespace           = "AWS/EC2"
   period              = "60"
