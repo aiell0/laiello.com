@@ -23,7 +23,6 @@ data "aws_ami" "wordpress" {
 resource "aws_instance" "ec2" {
   ami                     = data.aws_ami.wordpress.id
   instance_type           = var.instance_size
-  key_name                = var.key_name
   iam_instance_profile    = aws_iam_instance_profile.laiello_instance_profile.name
   disable_api_termination = true
   monitoring              = false
