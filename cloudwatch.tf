@@ -83,14 +83,19 @@ resource "aws_cloudwatch_metric_alarm" "disk_usage_alarm" {
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "3"
   metric_name         = "disk_used_percent"
-  namespace           = "CWAgent"
+  namespace           = "laiellocom"
   period              = "60"
   statistic           = "Average"
   threshold           = "60"
   alarm_description   = "This metric monitors disk space usage"
   alarm_actions       = [aws_sns_topic.laiello_infrastructure.arn]
   dimensions = {
-    InstanceId = aws_instance.ec2.id
+    InstanceId   = aws_instance.ec2.id,
+    InstanceType = var.instance_size,
+    ImageId      = data.aws_ami.wordpress.id,
+    path         = "/",
+    device       = "nvme0n1p1",
+    fstype       = "xfs"
   }
 }
 
@@ -99,14 +104,16 @@ resource "aws_cloudwatch_metric_alarm" "memory_usage_alarm" {
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "3"
   metric_name         = "mem_used_percent"
-  namespace           = "CWAgent"
+  namespace           = "laiellocom"
   period              = "60"
   statistic           = "Average"
   threshold           = "70"
   alarm_description   = "This metric monitors RAM usage"
   alarm_actions       = [aws_sns_topic.laiello_infrastructure.arn]
   dimensions = {
-    InstanceId = aws_instance.ec2.id
+    InstanceId   = aws_instance.ec2.id,
+    InstanceType = var.instance_size,
+    ImageId      = data.aws_ami.wordpress.id,
   }
 }
 
