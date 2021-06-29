@@ -4,7 +4,7 @@ data "aws_ami" "wordpress" {
 
   filter {
     name   = "name"
-    values = ["laiello.com-gp3"]
+    values = ["laiello.com-*"]
   }
 
   filter {
@@ -76,7 +76,7 @@ EOF
 
 # Elastic IP
 resource "aws_network_interface" "eni" {
-  subnet_id       = data.terraform_remote_state.arch.outputs.vpc_public_subnets[0]
+  subnet_id       = "subnet-069d83c6964c5d81a"
   security_groups = [aws_security_group.wordpress.id]
 
   tags = local.tags

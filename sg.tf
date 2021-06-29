@@ -1,7 +1,7 @@
 resource "aws_security_group" "wordpress" {
   name        = "wordpress"
   description = "For use with personal wordpress blog."
-  vpc_id      = data.terraform_remote_state.arch.outputs.vpc_id
+  vpc_id      = "vpc-08481434d32010c72"
 
   ingress {
     description = "HTTPS"
