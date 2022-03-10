@@ -4,7 +4,7 @@ data "aws_ami" "wordpress" {
 
   filter {
     name   = "name"
-    values = ["laiello.com-gp3"]
+    values = ["laiello.com-*"]
   }
 
   filter {
